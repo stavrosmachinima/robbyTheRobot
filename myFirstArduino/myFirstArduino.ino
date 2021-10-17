@@ -4,61 +4,60 @@
 //L298N control pins
 const int LeftMotorForward=5;
 const int LeftMotorBackward=4;
-const int RightMotorForward=3;
-const int RightMotorBackward=2;
+const int RightMotorForward=2;
+const int RightMotorBackward=3;
 
 //sensor pins
 // me to #define den 8eteis mnhmh san to const int pixi.
-#define trig_pin A1 // analog input 1
-#define echo_pin A2 // analog input 2
-
-//QUESTIONS
-
-// 1) Giati vazei delays????
-
-// gia na dwsei xrono sta shmata na kanoun kinhseis.
+#define trig_pin A2 // analog input 1
+#define echo_pin A1 // analog input 2
 
 #define maximum_distance 200
-
 boolean goesForward=false;
 int distance=100;
 
-//ousiastika kalei to sonar function
+//QUESTIONS
+
+ //Q: Giati vazοume delays????
+
+ //A: gia na dwsoume xrono sta shmata na kanoun kinhseis.
+
+//kalei to sonar function
 NewPing sonar(trig_pin, echo_pin,maximum_distance); //NewPing setup of pins and maximum distance.
 Servo servo_motor; //the servo name
 
 
 void setup() {
-  // put your setup code here, to run once:
+ //runs once:
 
-  pinMode(RightMotorForward ,OUTPUT);
   pinMode(LeftMotorForward, OUTPUT);
   pinMode(LeftMotorBackward, OUTPUT);
+  pinMode(RightMotorForward ,OUTPUT);
   pinMode(RightMotorBackward, OUTPUT);
 
-  servo_motor.attach(11); // our servo pin
+  servo_motor.attach(11);  //our servo pin
 
-  servo_motor.write(90);
+//gia configuration tou sensora to apo katw.
+  servo_motor.write(85);
   delay(2000);
-  distance=readPing();
+  distance = readPing();
   delay(100);
-  distance=readPing();
+  distance = readPing();
   delay(100);
-  distance=readPing();
+  distance = readPing();
   delay(100);
-  distance=readPing();
+  distance = readPing();
   delay(100);
-
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+   //runs repeatedly:
 
   int distanceRight=0;
   int distanceLeft=0;
   delay(50);
 
-  if (distance<=20)
+  if (distance<=35)
   {
     moveStop();
     delay(300);
@@ -67,6 +66,7 @@ void loop() {
     moveStop();
     delay(300);
     distanceRight=lookRight();
+    delay(300);
     distanceLeft=lookLeft();
     delay(300);
 
@@ -84,14 +84,13 @@ void loop() {
     moveForward();
   }
   distance=readPing();
-}
+}  
 
-int lookRight()
+int lookLeft()
 {
   // to write einai to stripsimo tou kefaliou se moires
-  servo_motor.write(10);
+  servo_motor.write(50);
   delay(500);
-
   // analoga to mege8os tou palmou pou lamvanei einai kai h apostash apo ta antikeimena
   int distance=readPing();
   delay(100);
@@ -99,9 +98,9 @@ int lookRight()
   return distance;
 }
 
-int lookLeft()
+int lookRight()
 {
-  servo_motor.write(170);
+  servo_motor.write(130);
   delay(500);
   int distance=readPing();
   delay(100);
@@ -125,7 +124,9 @@ int readPing()
 
 void moveStop()
 {
-  // proypo8etei to Pinmode. To digitalWrite xeirizetai ta Volt sto ka8e pin. 5 Volt h 0 volt. Volt einai h piesh pou askeitai sta hlektrnia.
+  goesForward=false;
+  // proypo8etei to Pinmode. To digitalWrite xeirizetai ta Volt sto ka8e pin.
+  //5 Volt h 0 volt. Volt einai h piesh pou askeitai sta hlektronia.
   digitalWrite(RightMotorForward, LOW);
   digitalWrite(LeftMotorForward,LOW);
   digitalWrite(RightMotorBackward,LOW);
@@ -134,7 +135,8 @@ void moveStop()
 
 void moveForward()
 {
-// mono an exei stamathsei na phgainei mprosta (goesForward=false), 8a synexisei na phgainei mprosta.
+ //mono an exei stamathsei na phgainei mprosta (goesForward=false),
+ //8a synexisei na phgainei mprosta.
   if (!goesForward)
   {
     goesForward=true;
@@ -150,7 +152,7 @@ void moveForward()
 void moveBackward()
 {
   goesForward=false;
-
+  
   digitalWrite(LeftMotorBackward,HIGH);
   digitalWrite(RightMotorBackward,HIGH);
 
@@ -161,13 +163,14 @@ void moveBackward()
 void turnRight()
 {
   // otan strivei einai to delay pou xeirizetai to poses moires 8a stripsei o arduino
+
   digitalWrite(LeftMotorForward,HIGH);
   digitalWrite(RightMotorBackward,HIGH);
-
+  
   digitalWrite(LeftMotorBackward,LOW);
   digitalWrite(RightMotorForward,LOW);
-
-  delay(500);
+  
+  delay(250);
 
   digitalWrite(LeftMotorForward,HIGH);
   digitalWrite(RightMotorForward,HIGH);
@@ -184,7 +187,7 @@ void turnLeft()
   digitalWrite(LeftMotorForward,LOW);
   digitalWrite(RightMotorBackward,LOW);
 
-  delay(500);
+  delay(250);
 
   digitalWrite(LeftMotorForward,HIGH);
   digitalWrite(RightMotorForward,HIGH);
