@@ -2,6 +2,10 @@
 
 Arduino Avoidance Tracking Car
 
-You can find videos of Robby at the end of the pdf.
+This project was part of Artificial Intelligence project of the University of Piraues
 
-There is both an English and a Greek version for the docs.
+See more about it in the docs.
+(English and Greek version included.)
+
+You can see Robby in action. 
+(videos included at last page of docs)
