@@ -2,7 +2,7 @@
 
 Arduino Avoidance Tracking Car
 
-This project was part of Artificial Intelligence project of the University of Piraues
+This project was part of Artificial Intelligence project of the University of Piraues.
 
 See more about it in the docs.
 (English and Greek version included.)
